@@ -16,7 +16,7 @@ import (
 func main() {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal(err)
+		log.Println("No .env file found, proceeding with environment variables.")
 	}
 
 	config := &storage.Config{
@@ -29,13 +29,13 @@ func main() {
 	}
 
 	db, err := storage.NewConnection(config)
-	if (err != nil) {
+	if err != nil {
 		log.Fatal("could not load the database")
 	}
 
 	err = models.MigrateNotes(db)
 	if err != nil {
-		log.Fatal("could not migrade db")
+		log.Fatal("could not migrate db")
 	}
 
 	app := fiber.New()
